@@ -1,7 +1,7 @@
 {
   "name": "@rocketsoftware/icons",
   "description": "Icons for digital and software products using the Carbon Design System",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -34,7 +34,7 @@
     "prepublishOnly": "yarn build"
   },
   "devDependencies": {
-    "@carbon/cli-reporter": "10.3.0",
+    "@carbon/cli-reporter": "0.0.4",
     "change-case": "^3.0.2",
     "joi": "^14.3.1",
     "js-yaml": "^3.12.1",
