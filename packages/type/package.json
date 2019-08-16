@@ -32,11 +32,11 @@
     "clean": "rimraf css es lib umd scss/_inlined scss/vendor"
   },
   "dependencies": {
-    "@carbon/import-once": "0.0.4",
+    "@carbon/import-once": "10.3.0",
     "@rocketsoftware/layout": "0.0.4"
   },
   "devDependencies": {
-    "@carbon/bundler": "0.0.4",
+    "@carbon/bundler": "10.4.0",
     "rimraf": "^2.6.2"
   },
   "eyeglass": {

@@ -34,7 +34,7 @@
     "prepublishOnly": "yarn build"
   },
   "devDependencies": {
-    "@carbon/cli-reporter": "0.0.4",
+    "@carbon/cli-reporter": "10.3.0",
     "change-case": "^3.0.2",
     "joi": "^14.3.1",
     "js-yaml": "^3.12.1",

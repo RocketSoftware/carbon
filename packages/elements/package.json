@@ -31,7 +31,7 @@
     "clean": "rimraf es lib umd && node tasks/clean.js"
   },
   "dependencies": {
-    "@carbon/import-once": "0.0.4",
+    "@carbon/import-once": "10.3.0",
     "@rocketsoftware/colors": "0.0.4",
     "@rocketsoftware/grid": "0.0.4",
     "@rocketsoftware/icons": "0.0.4",
@@ -41,7 +41,7 @@
     "@rocketsoftware/type": "0.0.4"
   },
   "devDependencies": {
-    "@carbon/bundler": "0.0.4",
+    "@carbon/bundler": "10.4.0",
     "fs-extra": "^7.0.1",
     "klaw-sync": "^6.0.0",
     "replace-in-file": "^3.4.2",
