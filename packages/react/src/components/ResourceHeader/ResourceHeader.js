@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Button } from '../Button';
+import Button from '../Button';
 
 function renderActionButtons(type, onClick) {
   const stop = (
-    <svg width="24" height="24" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path></svg>
+    <svg width="24" height="24" fill-rule="evenodd">
+      <path d="M0 0h24v24H0z"></path>
+    </svg>
   );
   const reboot = (
     <svg
@@ -66,13 +68,13 @@ function renderActionButtons(type, onClick) {
   }
 }
 
-function renderTitleStatus() {
-  return (
-    <div className="bx--resource-header__status-item bx--resource-header__status-item--active">
-      Active
-    </div>
-  );
-}
+// function renderTitleStatus() {
+//   return (
+//     <div className="bx--resource-header__status-item bx--resource-header__status-item--active">
+//       Active
+//     </div>
+//   );
+// }
 
 function renderStatus(status) {
   return status.map((item, i) => {
@@ -103,7 +105,7 @@ const ResourceHeader = ({
   status,
   subtitle,
   title,
-  ...other
+  // ...other
 }) => {
   const resourceHeaderClasses = classNames('bx--resource-header', className);
 

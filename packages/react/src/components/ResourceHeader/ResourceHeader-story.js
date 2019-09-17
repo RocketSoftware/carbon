@@ -1,14 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, text  } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { withKnobs, text } from '@storybook/addon-knobs';
 import ResourceHeader from './ResourceHeader';
-import { Breadcrumb, BreadcrumbItem } from '@rocketsoftware/carbon-components-react';
-import Dropdown  from '../Dropdown';
-
-function test(){
-    console.log('test');
-}
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+} from '@rocketsoftware/carbon-components-react';
+import Dropdown from '../Dropdown';
 
 const svg = (
   <svg width="40" height="38">
@@ -40,64 +38,65 @@ const items = [
 ];
 
 const props = {
-    full: () => ({
-        title: text('Title','Resource Name'),
-        isActive: true,
-        subtitle: [
-          'Dallas 9',
-          'Public IP: 169.55.5.4',
-          'Private IP: 10.142.128.147',
-        ],
-        icon: svg,
-        status: [
-          { text: 'Powered On', isTrue: true },
-          { text: 'Connected', isTrue: false },
-        ],
-    }),
-    simple: () => ({
-        title: text('Title','Resource Name')
-    }),
-    withIcon: () => ({
-        title: text('Title','Resource Name'),
-        icon: svg
-    }),
-    withIconNoActions: () => ({
-        title: text('Title','Resource Name'),
-        icon: svg,
-        subtitle: [
-          'Dallas 9',
-          'Public IP: 169.55.5.4',
-          'Private IP: 10.142.128.147',
-        ]
-    }),
-    withLeft: () => ({
-        title: text('Title','Resource Name'),
-        icon: svg,
-        subtitle: [
-          'Dallas 9',
-          'Public IP: 169.55.5.4',
-          'Private IP: 10.142.128.147',
-        ],
-        isActive: true,
-        renderReboot: () => console.log('Reboot!')
-    }),
-    rightDisconnected: () => ({
-        title: text('Title','Resource Name'),
-        icon: svg,
-        subtitle: [
-          'Dallas 9',
-          'Public IP: 169.55.5.4',
-          'Private IP: 10.142.128.147'
-        ],
-        status: [{ text: 'Disconnected', isTrue: false }],
-    }),
-  };
+  full: () => ({
+    title: text('Title', 'Resource Name'),
+    isActive: true,
+    subtitle: [
+      'Dallas 9',
+      'Public IP: 169.55.5.4',
+      'Private IP: 10.142.128.147',
+    ],
+    icon: svg,
+    status: [
+      { text: 'Powered On', isTrue: true },
+      { text: 'Connected', isTrue: false },
+    ],
+  }),
+  simple: () => ({
+    title: text('Title', 'Resource Name'),
+  }),
+  withIcon: () => ({
+    title: text('Title', 'Resource Name'),
+    icon: svg,
+  }),
+  withIconNoActions: () => ({
+    title: text('Title', 'Resource Name'),
+    icon: svg,
+    subtitle: [
+      'Dallas 9',
+      'Public IP: 169.55.5.4',
+      'Private IP: 10.142.128.147',
+    ],
+  }),
+  withLeft: () => ({
+    title: text('Title', 'Resource Name'),
+    icon: svg,
+    subtitle: [
+      'Dallas 9',
+      'Public IP: 169.55.5.4',
+      'Private IP: 10.142.128.147',
+    ],
+    isActive: true,
+    renderReboot: () => console.log('Reboot!'),
+  }),
+  rightDisconnected: () => ({
+    title: text('Title', 'Resource Name'),
+    icon: svg,
+    subtitle: [
+      'Dallas 9',
+      'Public IP: 169.55.5.4',
+      'Private IP: 10.142.128.147',
+    ],
+    status: [{ text: 'Disconnected', isTrue: false }],
+  }),
+};
 
 storiesOf('ResourceHeader', module)
   .addDecorator(withKnobs)
   .add(
     'Full',
-    () => { return (
+    () => {
+      return (
         <ResourceHeader
           renderBreadcrumbs={() => (
             <Breadcrumb>
@@ -113,24 +112,27 @@ storiesOf('ResourceHeader', module)
               itemToString={item => (item ? item.text : '')}
             />
           )}
-          renderStop={() => test()}
-          renderReboot={() => test()}
-          renderMaintenance={() => test()}
+          renderStop={() => console.log('Stop!')}
+          renderReboot={() => console.log('Reboot!')}
+          renderMaintenance={() => console.log('Maintenance Time!')}
           {...props.full()}
         />
-      ); },{
-        info: {
-          text: `
+      );
+    },
+    {
+      info: {
+        text: `
               Interactive tooltip should be used if there are actions a user can take in the tooltip (e.g. a link or a button).
               For more regular use case, e.g. giving the user more text information about something, use definition tooltip or icon tooltip.
               By default, the tooltip will render above the element. The example below shows the default scenario.
             `,
-        },
-      }
+      },
+    }
   )
   .add(
     'Simple',
-    () => { return (
+    () => {
+      return (
         <ResourceHeader
           renderBreadcrumbs={() => (
             <Breadcrumb>
@@ -148,19 +150,22 @@ storiesOf('ResourceHeader', module)
           )}
           {...props.simple()}
         />
-    ); }, {
-        info: {
-          text: `
+      );
+    },
+    {
+      info: {
+        text: `
               Interactive tooltip should be used if there are actions a user can take in the tooltip (e.g. a link or a button).
               For more regular use case, e.g. giving the user more text information about something, use definition tooltip or icon tooltip.
               By default, the tooltip will render above the element. The example below shows the default scenario.
             `,
-        },
-      }
+      },
+    }
   )
   .add(
     'With Icon',
-    () => {return (
+    () => {
+      return (
         <ResourceHeader
           renderBreadcrumbs={() => (
             <Breadcrumb>
@@ -178,19 +183,22 @@ storiesOf('ResourceHeader', module)
           )}
           {...props.withIcon()}
         />
-    ); }, {
-        info: {
-          text: `
+      );
+    },
+    {
+      info: {
+        text: `
               Interactive tooltip should be used if there are actions a user can take in the tooltip (e.g. a link or a button).
               For more regular use case, e.g. giving the user more text information about something, use definition tooltip or icon tooltip.
               By default, the tooltip will render above the element. The example below shows the default scenario.
             `,
-        },
-      }
+      },
+    }
   )
   .add(
     'Icon & subtitle, no actions',
-    () => { return (
+    () => {
+      return (
         <ResourceHeader
           renderBreadcrumbs={() => (
             <Breadcrumb>
@@ -208,19 +216,22 @@ storiesOf('ResourceHeader', module)
           )}
           {...props.withIconNoActions()}
         />
-    ); }, {
-        info: {
-          text: `
+      );
+    },
+    {
+      info: {
+        text: `
               Interactive tooltip should be used if there are actions a user can take in the tooltip (e.g. a link or a button).
               For more regular use case, e.g. giving the user more text information about something, use definition tooltip or icon tooltip.
               By default, the tooltip will render above the element. The example below shows the default scenario.
             `,
-        },
-      }
+      },
+    }
   )
   .add(
     'Left Active, with Reboot',
-    () => { return (
+    () => {
+      return (
         <ResourceHeader
           renderBreadcrumbs={() => (
             <Breadcrumb>
@@ -236,22 +247,25 @@ storiesOf('ResourceHeader', module)
               itemToString={item => (item ? item.text : '')}
             />
           )}
-          renderReboot={() => test()}
+          renderReboot={() => console.log('Reboot!')}
           {...props.withLeft()}
         />
-  ); }, {
-    info: {
-      text: `
+      );
+    },
+    {
+      info: {
+        text: `
           Interactive tooltip should be used if there are actions a user can take in the tooltip (e.g. a link or a button).
           For more regular use case, e.g. giving the user more text information about something, use definition tooltip or icon tooltip.
           By default, the tooltip will render above the element. The example below shows the default scenario.
         `,
-    },
-  }
+      },
+    }
   )
   .add(
     'Right Disconnected, with Stop + Reboot',
-    () => { return (
+    () => {
+      return (
         <ResourceHeader
           renderBreadcrumbs={() => (
             <Breadcrumb>
@@ -267,18 +281,19 @@ storiesOf('ResourceHeader', module)
               itemToString={item => (item ? item.text : '')}
             />
           )}
-          renderReboot={() => test()}
-          renderStop={() => test()}
+          renderReboot={() => console.log('Reboot!')}
+          renderStop={() => console.log('Stop!')}
           {...props.rightDisconnected()}
         />
-
-    ); }, {
-        info: {
-          text: `
+      );
+    },
+    {
+      info: {
+        text: `
               Interactive tooltip should be used if there are actions a user can take in the tooltip (e.g. a link or a button).
               For more regular use case, e.g. giving the user more text information about something, use definition tooltip or icon tooltip.
               By default, the tooltip will render above the element. The example below shows the default scenario.
             `,
-        },
-      }
+      },
+    }
   );
