@@ -2,31 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Button from '../Button';
+import { Tools16, Stop16, Restart16 } from '@rocketsoftware/icons-react';
 
 function renderActionButtons(type, onClick) {
-  const stop = (
-    <svg width="24" height="24" fill-rule="evenodd">
-      <path d="M0 0h24v24H0z"></path>
-    </svg>
-  );
-  const reboot = (
-    <svg
-      className="bx--resource-header__button--icon"
-      width="20"
-      height="24"
-      viewBox="0 0 20 24"
-      fillRule="evenodd">
-      <path d="M12.2 4.6L12 4V0H8v4l-.2.6C3.4 5.6.2 9.5.2 14.2.2 19.7 4.6 24 10 24s9.8-4.4 9.8-9.8c0-4.7-3.3-8.6-7.6-9.6zM10 21.8c-4.3 0-7.6-3.4-7.6-7.6 0-3.5 2.2-6.3 5.5-7.3L8 7v7h4V7l.2-.1c3.3 1 5.5 3.8 5.5 7.3-.1 4.2-3.4 7.6-7.7 7.6z" />
-    </svg>
-  );
-
-  const maintenance = (
-    <svg className="bx--resource-header__button--icon" width="16" height="16">
-      <path d="M0 0h16v2H0z" />
-      <path d="M10.5 7.5c-.3.3-.7.3-1 0-.3-.3-.3-.7 0-1l1.3-1.3c-.4-.1-.7-.2-1.1-.2-1.2 0-2.2 1-2.2 2.3 0 .2 0 .4.1.6l-3.3 3.3c-.4.4-.4 1.1 0 1.5.4.4 1.1.4 1.5 0l3.3-3.3c.2.1.4.1.6.1 1.2 0 2.3-1 2.3-2.3 0-.4-.1-.7-.2-1l-1.3 1.3z" />
-      <path d="M14 4v10H2V4h12m2-2H0v14h16V2z" />
-    </svg>
-  );
+  const stop = Stop16;
+  const reboot = Restart16;
+  const maintenance = Tools16;
 
   let svg;
   if (type === 'Stop') {
@@ -36,7 +17,7 @@ function renderActionButtons(type, onClick) {
         className="bx--resource-header__button"
         onClick={onClick}
         small
-        icon={svg}
+        renderIcon={svg}
         kind="ghost">
         {type}
       </Button>
@@ -47,7 +28,7 @@ function renderActionButtons(type, onClick) {
       <Button
         className="bx--resource-header__button"
         onClick={onClick}
-        icon={svg}
+        renderIcon={svg}
         small
         kind="ghost">
         {type}
@@ -60,7 +41,7 @@ function renderActionButtons(type, onClick) {
         className="bx--resource-header__button"
         onClick={onClick}
         small
-        icon={svg}
+        renderIcon={svg}
         kind="ghost">
         {type}
       </Button>
