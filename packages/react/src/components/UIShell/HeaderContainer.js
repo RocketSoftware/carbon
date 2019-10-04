@@ -8,20 +8,33 @@
 import PropTypes from 'prop-types';
 import React, { useState, useCallback } from 'react';
 
-const HeaderContainer = ({ isSideNavExpanded, render: Children }) => {
+const HeaderContainer = ({
+  isSideNavExpanded,
+  render: Children,
+  activeGlobalAction,
+}) => {
   //state for expandable sidenav
   const [isSideNavExpandedState, setIsSideNavExpandedState] = useState(
     isSideNavExpanded
+  );
+  const [activeGlobalActionState, setActiveGlobalActionState] = useState(
+    activeGlobalAction
   );
 
   const handleHeaderMenuButtonClick = useCallback(() => {
     setIsSideNavExpandedState(!isSideNavExpandedState);
   }, [isSideNavExpandedState, setIsSideNavExpandedState]);
 
+  const handleChangeGlobalAction = globalAction => {
+    setActiveGlobalActionState(globalAction);
+  };
+
   return (
     <Children
       isSideNavExpanded={isSideNavExpandedState}
       onClickSideNavExpand={handleHeaderMenuButtonClick}
+      activeGlobalAction={activeGlobalActionState}
+      onChangeGlobalAction={handleChangeGlobalAction}
     />
   );
 };
@@ -31,6 +44,11 @@ HeaderContainer.propTypes = {
    * Optionally provide initial state for expandable sidenav
    */
   isSideNavExpanded: PropTypes.bool,
+
+  /**
+   * Optionally provide globalAction to be active initially
+   */
+  activeGlobalAction: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 HeaderContainer.defaultProps = {
