@@ -28,7 +28,7 @@ const HeaderContainer = ({ isSideNavExpanded, render: Children }) => {
 
 HeaderContainer.propTypes = {
   /**
-   * Optionally provide a custom class name that is applied to the underlying <header>
+   * Optionally provide initial state for expandable sidenav
    */
   isSideNavExpanded: PropTypes.bool,
 };
