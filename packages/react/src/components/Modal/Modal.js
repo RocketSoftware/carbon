@@ -382,11 +382,20 @@ export default class Modal extends Component {
       modal
     ) : (
       // `<FocusTrap>` has `active: true` in its `defaultProps`
-      <FocusTrap
-        active={!!open}
-        focusTrapOptions={{ initialFocus: this.initialFocus }}>
-        {modal}
-      </FocusTrap>
+      <div onClick={() => alert('hey ive been clicked')}>
+        <FocusTrap
+          active={!!open}
+          focusTrapOptions={{
+            initialFocus: this.initialFocus,
+            allowOutsideClick: () => {
+              console.log('am i being called or not');
+              alert('hello outside click');
+              return true;
+            },
+          }}>
+          {modal}
+        </FocusTrap>
+      </div>
     );
   }
 }
