@@ -61,6 +61,7 @@ exports[`ModalWrapper should render 1`] = `
         active={false}
         focusTrapOptions={
           Object {
+            "allowOutsideClick: [Function],
             "initialFocus": [Function],
           }
         }
