@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import { settings } from '@rocketsoftware/carbon-components';
 import { Close20 } from '@rocketsoftware/icons-react';
-import FocusTrap from 'focus-trap-react';
+import FocusTrap from 'ft-react';
 import toggleClass from '../../tools/toggleClass';
 import Button from '../Button';
 import { AriaLabelPropType } from '../../prop-types/AriaPropTypes';
@@ -125,10 +125,15 @@ export default class Modal extends Component {
     selectorPrimaryFocus: PropTypes.string,
 
     /**
-     * Specify whether the modal should use 3rd party `focus-trap-react` for the focus-wrap feature.
+     * Specify whether the modal should use 3rd party `ft-react` for the focus-wrap feature.
      * NOTE: by default this is true.
      */
     focusTrap: PropTypes.bool,
+
+    /**
+     * Specify whether the focus trap should also trap mouse events. By default this is false.
+     */
+    trapMouse: PropTypes.bool,
 
     /**
      * Required props for the accessibility label of the header
@@ -147,6 +152,7 @@ export default class Modal extends Component {
     modalLabel: '',
     selectorPrimaryFocus: '[data-modal-primary-focus]',
     focusTrap: true,
+    trapMouse: false,
   };
 
   button = React.createRef();
@@ -220,12 +226,15 @@ export default class Modal extends Component {
   }
 
   initialFocus = focusContainerElement => {
-    const primaryFocusElement = focusContainerElement
-      ? focusContainerElement.querySelector(this.props.selectorPrimaryFocus)
+    const containerElement = focusContainerElement || this.innerModal.current;
+    const primaryFocusElement = containerElement
+      ? containerElement.querySelector(this.props.selectorPrimaryFocus)
       : null;
+
     if (primaryFocusElement) {
       return primaryFocusElement;
     }
+
     return this.button && this.button.current;
   };
 
@@ -235,6 +244,10 @@ export default class Modal extends Component {
       target.focus();
     }
   };
+
+  componentWillUnmount() {
+    toggleClass(document.body, `${prefix}--body--with-modal-open`, false);
+  }
 
   componentDidMount() {
     toggleClass(
@@ -284,6 +297,7 @@ export default class Modal extends Component {
       selectorsFloatingMenus, // eslint-disable-line
       shouldSubmitOnEnter, // eslint-disable-line
       focusTrap,
+      trapMouse,
       ...other
     } = this.props;
 
@@ -382,20 +396,14 @@ export default class Modal extends Component {
       modal
     ) : (
       // `<FocusTrap>` has `active: true` in its `defaultProps`
-      <div onClick={() => alert('hey ive been clicked')}>
-        <FocusTrap
-          active={!!open}
-          focusTrapOptions={{
-            initialFocus: this.initialFocus,
-            allowOutsideClick: () => {
-              console.log('am i being called or not');
-              alert('hello outside click');
-              return true;
-            },
-          }}>
-          {modal}
-        </FocusTrap>
-      </div>
+      <FocusTrap
+        active={!!open}
+        focusTrapOptions={{
+          initialFocus: this.initialFocus,
+          allowOutsideClick: () => !trapMouse,
+        }}>
+        {modal}
+      </FocusTrap>
     );
   }
 }
