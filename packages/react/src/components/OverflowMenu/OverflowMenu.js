@@ -203,6 +203,11 @@ class OverflowMenu extends Component {
      * Function called when menu is closed
      */
     onOpen: PropTypes.func,
+
+    /**
+     * Optional callback used to obtain a custom 'viewport' that differs from the window.
+     */
+    getViewport: PropTypes.func,
   };
 
   static defaultProps = {
@@ -319,6 +324,10 @@ class OverflowMenu extends Component {
   };
 
   handleKeyPress = evt => {
+    if (!keyCodeMatches(evt, [keys.Enter, keys.Space])) {
+      evt.preventDefault();
+    }
+
     // only respond to key events when the menu is closed, so that menu items still respond to key events
     if (!this.state.open) {
       if (keyCodeMatches(evt, [keys.Enter, keys.Space])) {
@@ -331,7 +340,6 @@ class OverflowMenu extends Component {
       this.closeMenu();
       // Stop the esc keypress from bubbling out and closing something it shouldn't
       evt.stopPropagation();
-      evt.preventDefault();
     }
   };
 
@@ -453,6 +461,7 @@ class OverflowMenu extends Component {
       renderIcon: IconElement,
       innerRef: ref,
       menuOptionsClass,
+      getViewport,
       ...other
     } = this.props;
 
@@ -507,6 +516,7 @@ class OverflowMenu extends Component {
         menuPosition={this.state.menuPosition}
         menuDirection={direction}
         menuOffset={flipped ? menuOffsetFlip : menuOffset}
+        getViewport={getViewport}
         menuRef={this._bindMenuBody}
         menuEl={this.menuEl}
         flipped={this.props.flipped}
@@ -535,7 +545,6 @@ class OverflowMenu extends Component {
           aria-expanded={this.state.open}
           className={overflowMenuClasses}
           onKeyDown={this.handleKeyPress}
-          onBlur={this.handleBlur}
           onClick={this.handleClick}
           aria-label={ariaLabel}
           id={id}

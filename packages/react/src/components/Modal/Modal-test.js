@@ -14,7 +14,7 @@ import { settings } from '@rocketsoftware/carbon-components';
 
 const { prefix } = settings;
 
-// The modal is the 0th child inside the wrapper on account of focus-trap-react
+// The modal is the 0th child inside the wrapper on account of ft-react
 const getModal = wrapper => wrapper.childAt(0);
 
 describe('Modal', () => {
@@ -119,6 +119,10 @@ describe('Modal', () => {
       expect(
         document.body.classList.contains('bx--body--with-modal-open')
       ).toEqual(true);
+      wrapper.unmount();
+      expect(
+        document.body.classList.contains('bx--body--with-modal-open')
+      ).toEqual(false);
     });
 
     it('should set state to open when trigger button is clicked', () => {
