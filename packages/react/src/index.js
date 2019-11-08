@@ -165,5 +165,5 @@ export ToggleSmallSkeleton from './components/ToggleSmall/ToggleSmall.Skeleton';
 export IconSkeleton from './components/Icon/Icon.Skeleton';
 export DatePickerSkeleton from './components/DatePicker/DatePicker.Skeleton';
 export Tour from './components/Tour';
-export TourTooltip from '.components/TourTooltip';
+export TourTooltip from './components/TourTooltip';
 export * from './components/UIShell';
