@@ -1,91 +1,218 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { settings } from '@rocketsoftware/carbon-components';
-import Checkbox from '../Checkbox';
+import cx from 'classnames';
+import { Close20, Undo20 } from '@rocketsoftware/icons-react';
 
 const { prefix } = settings;
 
 class TourTooltip extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      flipped: false,
+    };
   }
 
   render() {
     const {
-      checked,
-      onChangeChecked,
       title,
       description,
       nextLabel,
       prevLabel,
-      closeLabel,
       onNext,
       onPrev,
-      onClose,
+      // onClose,
       disableNext,
       disablePrev,
-      disableClose,
-      checkboxLabel,
-      hideCheckbox,
+      // disableClose,
       hideNext,
       hidePrev,
-      hideClose,
     } = this.props;
 
     const next = disableNext ? undefined : onNext;
     const prev = disablePrev ? undefined : onPrev;
-    const close = disableClose ? undefined : onClose;
+    // const close = disableClose ? undefined : onClose;
 
     return (
-      <>
-        <div className={`${prefix}--tour-tooltip`}>
-          {title && (
-            <div className={`${prefix}--tour-tooltip__heading`}>{title}</div>
-          )}
-          <p>{description}</p>
-          {!hideCheckbox && (
-            <div className={`${prefix}--tour-tooltip__footer`}>
-              <Checkbox
-                id={`${prefix}--tour-tooltip--checkbox`}
-                className={`${prefix}--tour-tooltip--checkbox`}
-                checked={checked}
-                onChange={onChangeChecked}
-                labelText={checkboxLabel}
-              />
-            </div>
-          )}
-          {!(hideNext && hidePrev && hideClose) && (
+      <div className={`${prefix}--tour-tooltip--cardflip`}>
+        <div
+          className={cx(`${prefix}--tour-tooltip`, {
+            flipped: this.state.flipped,
+          })}>
+          <TooltipFace
+            flip={() => this.setState({ flipped: true })}
+            front={true}
+            title={title}
+            body={description}>
+            {!(hideNext && hidePrev) && (
+              <div className={`${prefix}--tour-tooltip__action-group`}>
+                {!hidePrev && (
+                  <button
+                    onClick={prev}
+                    disabled={disablePrev}
+                    className={`${prefix}--btn ${prefix}--btn--secondary ${prefix}--btn--sm`}>
+                    {prevLabel}
+                  </button>
+                )}
+                {!hideNext && (
+                  <button
+                    onClick={next}
+                    disabled={disableNext}
+                    className={`${prefix}--btn ${prefix}--btn--primary ${prefix}--btn--sm`}>
+                    {nextLabel}
+                  </button>
+                )}
+              </div>
+            )}
+          </TooltipFace>
+          <TooltipFace
+            flip={() => this.setState({ flipped: false })}
+            front={false}
+            title={'close tour?'}
+            body={'If you come back to this page, this tour will reappear'}>
             <div className={`${prefix}--tour-tooltip__action-group`}>
-              {!hideClose && (
-                <button
-                  onClick={close}
-                  className={`${prefix}--btn ${prefix}--btn--ghost ${prefix}--btn--sm`}>
-                  {closeLabel}
-                </button>
-              )}
-              {!hidePrev && (
-                <button
-                  onClick={prev}
-                  disabled={disablePrev}
-                  className={`${prefix}--btn ${prefix}--btn--secondary ${prefix}--btn--sm`}>
-                  {prevLabel}
-                </button>
-              )}
-              {!hideNext && (
-                <button
-                  onClick={next}
-                  disabled={disableNext}
-                  className={`${prefix}--btn ${prefix}--btn--primary ${prefix}--btn--sm`}>
-                  {nextLabel}
-                </button>
-              )}
+              <button
+                onClick={prev}
+                disabled={disablePrev}
+                className={`${prefix}--btn ${prefix}--btn--secondary ${prefix}--btn--sm`}>
+                Don't show me again
+              </button>
+              <button
+                onClick={next}
+                disabled={disableNext}
+                className={`${prefix}--btn ${prefix}--btn--primary ${prefix}--btn--sm`}>
+                Close for now
+              </button>
             </div>
-          )}
+          </TooltipFace>
+
+          {/* <div className={cx(`${prefix}--tour-tooltip__face`, `${prefix}--tour-tooltip--front`)}>
+            <button
+              className={`${prefix}--tour-tooltip__flip-button`}
+              type="button"
+              onClick={() => this.setState({ flipped: !this.state.flipped })}
+              disabled={disableClose}
+            >
+              {this.state.flipped
+                ? <Undo20 className={`${prefix}--tour-tooltip__flip--icon`} />
+                : <Close20 className={`${prefix}--tour-tooltip__flip--icon`} />
+              }
+            </button>
+            <div className={`${prefix}--tour-tooltip__title`}>{title}</div>
+            <p className={`${prefix}--tour-tooltip__body`}>{description}</p>
+            {!(hideNext && hidePrev) && (
+              <div className={`${prefix}--tour-tooltip__action-group`}>
+                {!hidePrev && (
+                  <button
+                    onClick={prev}
+                    disabled={disablePrev}
+                    className={`${prefix}--btn ${prefix}--btn--secondary ${prefix}--btn--sm`}>
+                    {prevLabel}
+                  </button>
+                )}
+                {!hideNext && (
+                  <button
+                    onClick={next}
+                    disabled={disableNext}
+                    className={`${prefix}--btn ${prefix}--btn--primary ${prefix}--btn--sm`}>
+                    {nextLabel}
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+          <div className={cx(`${prefix}--tour-tooltip__face`, `${prefix}--tour-tooltip--back`)}>
+            <button
+              className={`${prefix}--tour-tooltip__flip-button`}
+              type="button"
+              onClick={() => {
+                this.setState({ flipped: !this.state.flipped })
+                close();
+              }}
+              disabled={disableClose}
+            >
+              {this.state.flipped
+                ? <Undo20 className={`${prefix}--tour-tooltip__flip--icon`} />
+                : <Close20 className={`${prefix}--tour-tooltip__flip--icon`} />
+              }
+            </button>
+            <div className={`${prefix}--tour-tooltip__title`}>{title}</div>
+            <p className={`${prefix}--tour-tooltip__body`}>{description}</p>
+            {!(hideNext && hidePrev) && (
+              <div className={`${prefix}--tour-tooltip__action-group`}>
+                {!hidePrev && (
+                  <button
+                    onClick={prev}
+                    disabled={disablePrev}
+                    className={`${prefix}--btn ${prefix}--btn--secondary ${prefix}--btn--sm`}>
+                    {prevLabel}
+                  </button>
+                )}
+                {!hideNext && (
+                  <button
+                    onClick={next}
+                    disabled={disableNext}
+                    className={`${prefix}--btn ${prefix}--btn--primary ${prefix}--btn--sm`}>
+                    {nextLabel}
+                  </button>
+                )}
+              </div>
+            )}
+          </div> */}
         </div>
-      </>
+      </div>
     );
   }
 }
+
+/*
+{!(hideNext && hidePrev) && (
+        <div className={`${prefix}--tour-tooltip__action-group`}>
+          {!hideSecondary && (
+            <button
+              onClick={prev}
+              disabled={disableSecondary}
+              className={`${prefix}--btn ${prefix}--btn--secondary ${prefix}--btn--sm`}>
+              {prevLabel}
+            </button>
+          )}
+          {!hidePrimary && (
+            <button
+              onClick={next}
+              disabled={disablePrimary}
+              className={`${prefix}--btn ${prefix}--btn--primary ${prefix}--btn--sm`}>
+              {nextLabel}
+            </button>
+          )}
+        </div>
+      )}
+      */
+
+const TooltipFace = props => {
+  const { front, flip, title, body } = props;
+  return (
+    <div
+      className={cx(
+        `${prefix}--tour-tooltip__face`,
+        `${prefix}--tour-tooltip--${front ? 'front' : 'back'}`
+      )}>
+      <button
+        className={`${prefix}--tour-tooltip__flip-button`}
+        type="button"
+        onClick={flip}>
+        {front ? (
+          <Close20 className={`${prefix}--tour-tooltip__flip--icon`} />
+        ) : (
+          <Undo20 className={`${prefix}--tour-tooltip__flip--icon`} />
+        )}
+      </button>
+      <div className={`${prefix}--tour-tooltip__title`}>{title}</div>
+      <p className={`${prefix}--tour-tooltip__body`}>{body}</p>
+      {props.children}
+    </div>
+  );
+};
 
 TourTooltip.propTypes = {
   /**
@@ -137,11 +264,6 @@ TourTooltip.propTypes = {
    * Optionally specify whether the "previous" button should be disabled
    */
   disablePrev: PropTypes.bool,
-
-  /**
-   * Optionally specify whether the "close" button should be disabled
-   */
-  disableClose: PropTypes.bool,
 
   /**
    * Optionally specify whether the "next"" button should be hidden

@@ -15,6 +15,9 @@ export default class Tour extends React.Component {
     return (
       <Walktour
         {...this.props}
+        customCloseFunc={logic =>
+          customCloseFunction(logic, this.props.onClose)
+        }
         customTooltipRenderer={logic => {
           const {
             title,
@@ -26,14 +29,6 @@ export default class Tour extends React.Component {
             prevLabel,
             closeLabel,
           } = logic.stepContent;
-
-          const onClose = this.props.onClose
-            ? () => {
-                this.props.onClose(this.state.checked);
-                logic.close();
-              }
-            : logic.close;
-
           return (
             <TourTooltip
               onChangeChecked={val => this.setState({ checked: val })}
@@ -41,7 +36,7 @@ export default class Tour extends React.Component {
               {...this.props}
               onNext={logic.next}
               onPrev={logic.prev}
-              onClose={onClose}
+              onClose={logic.close}
               description={description}
               title={title}
               disableClose={disableClose}
@@ -57,6 +52,13 @@ export default class Tour extends React.Component {
     );
   }
 }
+
+const customCloseFunction = (logic, onClose) => {
+  if (onClose) {
+    onClose();
+  }
+  logic.close();
+};
 
 Tour.propTypes = {
   /**

@@ -60,6 +60,19 @@ const steps = {
       description: 'You can scroll to ofscreen elements',
     },
   ],
+  smallText: () => [
+    {
+      selector: '#one',
+      title: 'Welcome To The Tour',
+      description:
+        'Use this component to point out new or important features. This text content forces the tooltip to reach its max width.',
+    },
+    {
+      selector: '#two',
+      movingTarget: true,
+      description: 'smol.',
+    },
+  ],
 };
 
 storiesOf('Tour', module)
@@ -90,5 +103,11 @@ storiesOf('Tour', module)
     <>
       {targets}
       <Tour steps={steps.default()} hideClose hidePrev hideNext />
+    </>
+  ))
+  .add('small text', () => (
+    <>
+      {targets}
+      <Tour steps={steps.smallText()} />
     </>
   ));
