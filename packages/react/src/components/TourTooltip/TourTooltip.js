@@ -9,7 +9,6 @@ const { prefix } = settings;
 class TourTooltip extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       flipped: false,
     };

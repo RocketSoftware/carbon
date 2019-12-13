@@ -66,7 +66,6 @@
     fill: $inverse-01;
     background-color: transparent;
     transition: background-color $duration--fast-02 motion(standard, productive);
-
     &:hover {
       background-color: $inverse-hover-ui;
     }

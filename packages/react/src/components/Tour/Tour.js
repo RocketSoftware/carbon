@@ -58,7 +58,6 @@ export default class Tour extends React.Component {
   }
 }
 
-// forwarding options from third party WalktourProps/WalktourOptions
 Tour.propTypes = {
   /**
    * An array of steps that the tour should follow
