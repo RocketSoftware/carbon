@@ -1,0 +1,52 @@
+@import '../../globals/scss/css--helpers';
+@import '../../globals/scss/helper-mixins';
+@import '../../globals/scss/typography';
+@import '../../globals/scss/layout';
+@import '../../globals/scss/vars';
+@import 'functions';
+@import 'theme';
+
+//----------------------------------------------------------------------------
+// Header Panel > Help Panel
+//----------------------------------------------------------------------------.
+.#{$prefix}--header-panel__help--container {
+  height: 100%;
+  // padding: 1rem;
+  color: $shell-panel-text-01;
+}
+
+//  .#{$prefix}--header-panel__help--contextual {
+//   // overflow-y: auto;
+// }
+
+// .#{$prefix}--header-panel__help--tour {
+//   // overflow-y: auto;
+// }
+
+//----------------------------------------------------------------------------
+// Header Panel > Help > Title
+//----------------------------------------------------------------------------.
+.#{$prefix}--header-panel__help--title {
+  margin: rem(16px) 0;
+}
+
+//----------------------------------------------------------------------------
+// Header Panel > Help > Title
+//----------------------------------------------------------------------------.
+.#{$prefix}--header-panel__help--subtitle {
+  margin: rem(16px) 0;
+}
+
+//----------------------------------------------------------------------------
+// Header Panel > Help > List
+//----------------------------------------------------------------------------.
+.#{$prefix}--header-panel__help--list {
+  margin-top: rem(16px);
+}
+
+//----------------------------------------------------------------------------
+// Header Panel > Help > List Item
+//----------------------------------------------------------------------------.
+.#{$prefix}--header-panel__help--list-item {
+  color: $shell-panel-text-01;
+}
