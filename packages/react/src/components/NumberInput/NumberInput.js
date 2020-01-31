@@ -195,7 +195,7 @@ class NumberInput extends Component {
   }
 
   handleChange = evt => {
-    const { disabled, onChange } = this.props;
+    const { disabled, onChange, min, max, enforceValidation } = this.props;
     if (!disabled) {
       evt.persist();
       evt.imaginaryTarget = this._inputRef;
@@ -305,6 +305,7 @@ class NumberInput extends Component {
       id,
       max,
       min,
+      enforceValidation,
       step,
       onChange: this.handleChange,
       value:
