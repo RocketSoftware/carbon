@@ -310,8 +310,13 @@ export default class DataTable extends React.Component {
 
     // Otherwise, we're working on `TableSelectAll` which handles toggling the
     // selection state of all rows.
-    const rowCount = this.getFilteredRowIds().length;
-    const selectedRowCount = this.getFilteredAndSelectedRowIds().length;
+    const filterValue = this.state.filterInputValue;
+    const rowCount = filterValue
+      ? this.getFilteredRowIds().length
+      : this.state.rowIds.length;
+    const selectedRowCount = filterValue
+      ? this.getFilteredAndSelectedRowIds().length
+      : this.getSelectedRows().length;
     const checked = rowCount > 0 && selectedRowCount === rowCount;
     const indeterminate =
       rowCount > 0 && selectedRowCount > 0 && selectedRowCount !== rowCount;
@@ -375,7 +380,7 @@ export default class DataTable extends React.Component {
 
   /**
    * Helper utility to get all the currently selected rows
-   * @returns {Array<string>} the array of rowIds that are currently selected
+   * returns {Array<string>} the array of rowIds that are currently selected
    */
   getSelectedRows = () =>
     this.state.rowIds.filter(id => {
