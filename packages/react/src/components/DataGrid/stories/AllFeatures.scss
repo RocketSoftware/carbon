@@ -1,0 +1,46 @@
+.highlight .bx--rdg-cell {
+  background-color: #9370db;
+  color: white;
+}
+
+.highlight:hover .bx--rdg-cell {
+  background-color: #800080;
+}
+#root > div:first-child > div:first-child {
+  height: 100%;
+}
+
+.header-filters-example {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 10px;
+
+  > .bx--rdg {
+    flex: 1;
+  }
+}
+
+.header-filters-toolbar {
+  text-align: end;
+}
+
+.bx--rdg-filter-container {
+  display: flex;
+  height: inherit;
+  align-items: center;
+}
+
+.bx--rdg-filter {
+  width: 100%;
+  padding: 4px;
+  font-size: 14px;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100vh;
+  padding: 8px;
+}

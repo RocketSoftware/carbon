@@ -1,0 +1,461 @@
+/* stylelint-disable max-nesting-depth */
+/* stylelint-disable */
+
+@import '../../globals/scss/helper-mixins';
+@import '../../globals/scss/vendor/@rocketsoftware/elements/scss/import-once/import-once';
+@import '../../globals/scss/vars';
+
+//  Core Styles
+.#{$prefix}--rdg {
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context
+  // We set a stacking context so internal elements don't render on top of external components.
+  contain: strict;
+  border: 1px solid #dddddd;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: scroll;
+  -webkit-user-select: none;
+  user-select: none;
+  background-color: #ffffff;
+  font-size: 14px;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+}
+
+// set stacking context in safari
+@supports not (contain: strict) {
+  .rdg {
+    position: relative;
+    z-index: 0;
+  }
+}
+
+.#{$prefix}--rdg-focus-sink {
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  outline: 0;
+}
+
+.#{$prefix}--rdg-viewport-dragging .rdg-row {
+  cursor: move;
+}
+
+// Cell Styles
+.#{$prefix}--rdg-cell {
+  contain: strict;
+  position: absolute;
+  height: inherit;
+  padding: 0 8px;
+  border-right: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  background-color: inherit;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.#{$prefix}--rdg-cell-frozen {
+  position: sticky;
+  /* Should have a higher value than 0 to show up above unfrozen cells */
+  z-index: 1;
+}
+
+.#{$prefix}--rdg-cell-frozen-last {
+  box-shadow: 2px 0 5px -2px rgba(136, 136, 136, 0.3);
+}
+
+.#{$prefix}--rdg-cell-selected {
+  box-shadow: inset 0 0 0 2px #66afe9;
+}
+
+.#{$prefix}--rdg-cell-copied {
+  background-color: #ccccff;
+}
+
+.#{$prefix}--rdg-cell-drag-handle {
+  cursor: move;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 8px;
+  height: 8px;
+  background: #66afe9;
+
+  &:hover {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #66afe9;
+    background: #ffffff;
+  }
+}
+
+.#{$prefix}--rdg-cell-dragged-over {
+  background-color: #ccccff;
+}
+
+.#{$prefix}--rdg-cell-copied.rdg-cell-dragged-over {
+  background-color: #9999ff;
+}
+
+//  Checkbox Styles
+.#{$prefix}--rdg-checkbox-label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.#{$prefix}--rdg-checkbox-label-disabled {
+  cursor: default;
+
+  .#{$prefix}--rdg-checkbox {
+    border-color: #cccccc;
+    background: #dddddd;
+  }
+}
+
+.#{$prefix}--rdg-checkbox-input {
+  all: unset;
+  width: 0;
+  margin: 0;
+}
+
+.#{$prefix}--rdg-checkbox {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid #dddddd;
+  background: #ffffff;
+
+  .#{$prefix}--rdg-checkbox-input:checked + & {
+    background: #005295;
+    box-shadow: inset 0px 0px 0px 4px #ffffff;
+  }
+
+  .#{$prefix}--rdg-checkbox-input:focus + & {
+    border-color: lighten(#005295, 40%);
+  }
+}
+
+//    Editor Styles
+.#{$prefix}--rdg-editor-container {
+  position: absolute;
+}
+
+.#{$prefix}--rdg-text-editor,
+.#{$prefix}--rdg-select-editor {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  box-sizing: border-box;
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
+  padding: 1px 7px 0;
+  margin: -1px 0 0 -1px;
+  border: 2px solid #cccccc;
+  background-color: #ffffff;
+
+  font-size: 14px;
+  line-height: 1.2;
+  // .placeholder-color(#999);
+  &::placeholder {
+    color: #999999;
+    opacity: 1;
+  }
+  &:focus {
+    border-color: #66afe9;
+  }
+}
+
+//  Header Styles
+
+.#{$prefix}--rdg-header-row,
+.#{$prefix}--rdg-filter-row {
+  contain: strict;
+  display: flex;
+  width: var(--row-width);
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: #f9f9f9;
+  font-weight: bold;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 3;
+}
+
+.#{$prefix}--rdg-header-row {
+  height: var(--header-row-height);
+  line-height: var(--header-row-height);
+  top: 0;
+}
+
+.#{$prefix}--rdg-filter-row {
+  height: var(--filter-row-height);
+  line-height: var(--filter-row-height);
+  top: var(--header-row-height);
+}
+
+// TODO: replace this with a pseudo-element once we drop support for Legacy Edge,
+// as `cursor` doesn't work on pseudo-elements on those browsers.
+.#{$prefix}--rdg-header-cell-resizer {
+  cursor: col-resize;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+}
+
+.#{$prefix}--rdg-cell .Select {
+  max-height: 30px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.#{$prefix}--rdg-header-sort-cell {
+  cursor: pointer;
+  display: flex;
+}
+
+.#{$prefix}--rdg-header-sort-name {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+//  Row Styles
+.#{$prefix}--rdg-row {
+  contain: strict;
+  display: flex;
+  position: absolute;
+  left: 0;
+  width: var(--row-width);
+  height: var(--row-height);
+  line-height: var(--row-height);
+  background-color: #ffffff;
+
+  &:hover {
+    background-color: darken(#ffffff, 4%);
+  }
+}
+
+.#{$prefix}--rdg-row-selected {
+  background-color: #dbecfa;
+
+  &:hover {
+    background-color: darken(#dbecfa, 4%);
+  }
+}
+
+.#{$prefix}--rdg-summary-row {
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 3;
+
+  > .rdg-cell {
+    border-top: 2px solid darken(#dddddd, 20%);
+  }
+}
+
+//Toolbar
+
+.#{$prefix}--rdg-toolbar {
+  background-color: #ffffff;
+  border-color: #e7eaec;
+  border-image: none;
+  border-style: solid solid none;
+  border-width: 1px;
+  color: inherit;
+  margin-bottom: 0;
+  padding: 14px 15px 7px;
+}
+
+.#{$prefix}--rdg-toolbar .btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  color: inherit;
+  background: #ffffff;
+  border: 1px solid #e7eaec;
+}
+
+.#{$prefix}--rdg-toolbar .btn:hover {
+  color: inherit;
+  border: 1px solid #d2d2d2;
+}
+
+.#{$prefix}--rdg-toolbar .grouped-col-btn {
+  background-color: #428bca;
+  color: #ffffff;
+  border-color: #2b669a;
+}
+
+.#{$prefix}--rdg-toolbar .grouped-col-btn:hover {
+  color: #ffffff;
+  border-color: #2b669a;
+}
+
+.#{$prefix}--rdg-toolbar .grouped-col-btn + .grouped-col-btn {
+  margin-left: 5px;
+}
+
+.#{$prefix}--rdg-toolbar .tools {
+  float: right;
+  position: relative;
+  padding: 0;
+  margin-top: -6px;
+}
+
+//Image
+.#{$prefix}--rdg-image-cell {
+  background: #efefef;
+  background-size: 100%;
+  display: inline-block;
+  height: 28px;
+  width: 28px;
+  vertical-align: middle;
+  background-position: center;
+}
+
+.#{$prefix}--rdg-image-cell-wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
+//Cell Expander
+.#{$prefix}--rdg-cell-expand {
+  float: right;
+  display: table;
+  height: 100%;
+}
+
+.#{$prefix}--rdg-cell-expand > span {
+  display: table-cell;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.#{$prefix}--rdg-child-row-action-cross:before,
+.#{$prefix}--rdg-child-row-action-cross:after {
+  content: '';
+  position: absolute;
+  background: #8d8d8d;
+}
+
+.#{$prefix}--rdg-child-row-action-cross:before {
+  left: 21px;
+  width: 1px;
+  height: 100%;
+}
+
+.#{$prefix}--rdg-child-row-action-cross:after {
+  top: 50%;
+  left: 20px;
+  height: 1px;
+  width: 15px;
+}
+
+.#{$prefix}--rdg-child-row-action-cross:hover {
+  background: #da1e28;
+}
+.#{$prefix}--rdg-child-row-btn {
+  cursor: pointer;
+  position: absolute;
+  left: 21px;
+  transform: translateX(-50%);
+  filter: grayscale(1);
+}
+
+//Cell Actions
+
+.#{$prefix}--rdg-cell-action {
+  float: right;
+}
+
+.#{$prefix}--rdg-cell-action-last {
+  margin-right: -8px;
+}
+
+.#{$prefix}--rdg-cell-action-button {
+  width: 35px;
+  height: 100%;
+  text-align: center;
+  position: relative;
+  display: table;
+  color: #4a9de2;
+}
+
+.#{$prefix}--rdg-cell-action-button > span {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.#{$prefix}--rdg-cell-action-button:hover,
+.#{$prefix}--rdg-cell-action-button-toggled {
+  color: #447bbb;
+}
+
+.#{$prefix}--rdg-cell-action-menu {
+  position: absolute;
+  top: 100%;
+  z-index: 1000;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  text-align: left;
+  list-style: none;
+  background-color: #ffffff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid #cccccc;
+  box-shadow: 0 0 3px 0 #cccccc;
+}
+
+.#{$prefix}--rdg-cell-action-menu > span {
+  display: block;
+  padding: 3px 10px;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.4286;
+  color: #333333;
+  white-space: nowrap;
+}
+
+.#{$prefix}--rdg-cell-action-menu > span:hover {
+  color: #262626;
+  text-decoration: none;
+  background-color: #f5f5f5;
+}
+
+.#{$prefix}--load-more-rows-tag {
+  line-height: 35px;
+  width: 180px;
+  position: relative;
+  top: -70px;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+}

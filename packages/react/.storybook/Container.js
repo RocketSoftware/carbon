@@ -35,6 +35,7 @@ function Container({ story }) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          height: '100%',
         }}>
         {story()}
       </div>

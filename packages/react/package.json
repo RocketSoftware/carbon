@@ -38,6 +38,7 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
+    "@popperjs/core": "^2.4.2",
     "@rocketsoftware/icons-react": "^0.6.0",
     "@rocketsoftware/walktour": "4.4.4",
     "classnames": "2.2.6",
@@ -50,7 +51,11 @@
     "lodash.isequal": "^4.5.0",
     "lodash.omit": "^4.5.0",
     "lodash.throttle": "^4.1.1",
+    "react-dnd": "^11.1.3",
+    "react-dnd-html5-backend": "^11.1.3",
     "react-is": "^16.8.6",
+    "react-popper": "^2.2.3",
+    "react-virtualized": "^9.21.2",
     "use-resize-observer": "^6.0.0",
     "warning": "^3.0.0",
     "window-or-global": "^1.0.1"
@@ -90,6 +95,7 @@
     "core-js": "^3.6.5",
     "cross-env": "^5.2.0",
     "css-loader": "^3.4.2",
+    "faker": "^4.1.0",
     "fast-sass-loader": "^1.5.0",
     "gzip-size": "^5.0.0",
     "lcov2badge": "^0.1.0",
