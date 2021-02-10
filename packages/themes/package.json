@@ -1,7 +1,7 @@
 {
   "name": "@rocketsoftware/themes",
   "description": "Themes for applying color in the Carbon Design System",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -30,9 +30,9 @@
     "build": "yarn clean && carbon-cli bundle src/index.js --name CarbonThemes && node tasks/build.js && carbon-cli check \"scss/*.scss\""
   },
   "dependencies": {
-    "@rocketsoftware/colors": "^0.6.0",
-    "@rocketsoftware/layout": "^0.6.0",
-    "@rocketsoftware/type": "^0.6.0",
+    "@rocketsoftware/colors": "^0.7.0",
+    "@rocketsoftware/layout": "^0.7.0",
+    "@rocketsoftware/type": "^0.7.0",
     "color": "^3.1.2"
   },
   "devDependencies": {

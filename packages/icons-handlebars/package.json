@@ -1,7 +1,7 @@
 {
   "name": "@rocketsoftware/icons-handlebars",
   "description": "Handlebars helpers for icons",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "license": "Apache-2.0",
   "main": "index.js",
   "repository": {
@@ -27,8 +27,8 @@
     "handlebars": "^4.0.12"
   },
   "dependencies": {
-    "@rocketsoftware/icon-helpers": "^0.6.0",
-    "@rocketsoftware/icons": "^0.6.0"
+    "@rocketsoftware/icon-helpers": "^0.7.0",
+    "@rocketsoftware/icons": "^0.7.0"
   },
   "devDependencies": {
     "handlebars": "^4.0.12"
