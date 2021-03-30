@@ -7,8 +7,14 @@
 
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import WindowedSelect from 'react-windowed-select';
 import classnames from 'classnames';
-import { CaretRight16, CaretLeft16 } from '@rocketsoftware/icons-react';
+import {
+  CaretRight16,
+  CaretLeft16,
+  ChevronDown16,
+} from '@rocketsoftware/icons-react';
+import { components } from 'react-select';
 import { settings } from '@rocketsoftware/carbon-components';
 import Select from '../Select';
 import SelectItem from '../SelectItem';
@@ -215,8 +221,8 @@ export default class Pagination extends Component {
     this.setState({ page: evt.target.value });
   };
 
-  handlePageInputChange = (evt) => {
-    const page = Number(evt.target.value);
+  handlePageInputChange = (item) => {
+    const page = Number(item.value);
     if (
       page > 0 &&
       page <=
@@ -246,12 +252,27 @@ export default class Pagination extends Component {
     let counter = 1;
     let itemArr = [];
     while (counter <= total) {
-      itemArr.push(
-        <SelectItem key={counter} value={counter} text={String(counter)} />
-      );
+      itemArr.push({
+        label: String(counter),
+        value: counter,
+      });
       counter++;
     }
     return itemArr;
+  };
+
+  DropdownIndicator = (props) => {
+    return (
+      <components.DropdownIndicator {...props}>
+        <ChevronDown16 />
+      </components.DropdownIndicator>
+    );
+  };
+
+  customStyles = {
+    valueContainer: () => ({
+      width: '4rem',
+    }),
   };
 
   render() {
@@ -343,17 +364,14 @@ export default class Pagination extends Component {
           </span>
         </div>
         <div className={`${prefix}--pagination__right`}>
-          <Select
+          <WindowedSelect
             id={`${prefix}-pagination-select-${inputId}-right`}
-            className={`${prefix}--select__page-number`}
-            labelText={`Page number, of ${totalPages} pages`}
-            inline
-            hideLabel
+            options={selectItems}
+            components={{ DropdownIndicator: this.DropdownIndicator }}
+            styles={this.customStyles}
+            disabled={pageInputDisabled || disabled}
             onChange={this.handlePageInputChange}
-            value={statePage}
-            disabled={pageInputDisabled || disabled}>
-            {selectItems}
-          </Select>
+          />
           <span className={`${prefix}--pagination__text`}>
             {pagesUnknown
               ? pageText(statePage)
