@@ -367,9 +367,10 @@ export default class Pagination extends Component {
           <WindowedSelect
             id={`${prefix}-pagination-select-${inputId}-right`}
             options={selectItems}
+            value={{ label: statePage, value: statePage }}
             components={{ DropdownIndicator: this.DropdownIndicator }}
             styles={this.customStyles}
-            disabled={pageInputDisabled || disabled}
+            isDisabled={pageInputDisabled || disabled}
             onChange={this.handlePageInputChange}
           />
           <span className={`${prefix}--pagination__text`}>

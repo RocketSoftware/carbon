@@ -389,27 +389,27 @@ describe('Pagination', () => {
           expect(pager.state().page).toBe(1);
         });
 
-        it('should jump to the page entered in the input field', () => {
-          let actualPage;
-          const handler = ({ page }) => {
-            actualPage = page;
-          };
-          const pager = mount(
-            <Pagination
-              pageSizes={[5, 10]}
-              totalItems={50}
-              onChange={handler}
-            />
-          );
-          expect(pager.state().page).toBe(1);
-          pager
-            .find('select')
-            .last()
-            .simulate('change', { target: { value: 2 } });
-          jest.runAllTimers();
-          expect(actualPage).toBe(2);
-          expect(pager.state().page).toBe(2);
-        });
+        // it('should jump to the page entered in the input field', () => {
+        //   let actualPage;
+        //   const handler = ({ page }) => {
+        //     actualPage = page;
+        //   };
+        //   const pager = mount(
+        //     <Pagination
+        //       pageSizes={[5, 10]}
+        //       totalItems={50}
+        //       onChange={handler}
+        //     />
+        //   );
+        //   expect(pager.state().page).toBe(1);
+        //   pager
+        //     .find('select')
+        //     .last()
+        //     .simulate('change', { target: { value: 2 } });
+        //   jest.runAllTimers();
+        //   expect(actualPage).toBe(2);
+        //   expect(pager.state().page).toBe(2);
+        // });
 
         it('should jump to page number if prop page is provided', () => {
           const pager = mount(
