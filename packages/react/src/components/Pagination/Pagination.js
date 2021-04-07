@@ -270,7 +270,12 @@ export default class Pagination extends Component {
   };
 
   customStyles = {
-    valueContainer: () => ({
+    container: (base) => ({
+      ...base,
+      marginRight: '.5rem',
+    }),
+    valueContainer: (base) => ({
+      ...base,
       width: '4rem',
     }),
   };
@@ -372,6 +377,7 @@ export default class Pagination extends Component {
             styles={this.customStyles}
             isDisabled={pageInputDisabled || disabled}
             onChange={this.handlePageInputChange}
+            menuPlacement={'auto'}
           />
           <span className={`${prefix}--pagination__text`}>
             {pagesUnknown
