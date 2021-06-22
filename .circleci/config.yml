@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/node:14-browsers
     environment:
-      NODE_OPTIONS: --max-old-space-size=3072
+      NODE_OPTIONS: --max-old-space-size=4096
     working_directory: ~/repo
     steps:
       - checkout
