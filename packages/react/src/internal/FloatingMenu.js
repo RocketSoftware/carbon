@@ -167,6 +167,11 @@ const getFloatingPosition = ({
 class FloatingMenu extends React.Component {
   static propTypes = {
     /**
+     * `true` if the menu alignment should be flipped when menu overflows at leftmost/rightmost side of table.
+     */
+    autoFlipped: PropTypes.bool,
+
+    /**
      * Contents to put into the floating menu.
      */
     children: PropTypes.object,
@@ -316,11 +321,11 @@ class FloatingMenu extends React.Component {
       oldMenuDirection !== menuDirection ||
       (oldGetViewport && oldGetViewport()) !== (getViewport && getViewport())
     ) {
-      const { flipped, triggerRef } = this.props;
+      const { flipped, triggerRef, autoFlipped = true } = this.props;
       const { current: triggerEl } = triggerRef;
       const menuSize = menuBody.getBoundingClientRect();
       const refPosition = triggerEl && triggerEl.getBoundingClientRect();
-      const offset =
+      let offset =
         typeof menuOffset !== 'function'
           ? menuOffset
           : menuOffset(menuBody, menuDirection, triggerEl, flipped);
@@ -332,8 +337,41 @@ class FloatingMenu extends React.Component {
       // b) `menuOffset` as a callback returns `undefined` (The callback saw that it couldn't calculate the value)
 
       if ((menuSize.width > 0 && menuSize.height > 0) || !offset) {
-        this.setState({
-          floatingPosition: getFloatingPosition({
+        let floatingPosition = getFloatingPosition({
+          menuSize,
+          refPosition,
+          direction: menuDirection,
+          offset,
+          viewportOffset: {
+            ...(viewportSize && {
+              left: viewportSize.left,
+              top: viewportSize.top,
+            }),
+          },
+          scrollX: viewport ? viewport.scrollLeft : window.pageXOffset,
+          scrollY: viewport ? viewport.scrollTop : window.pageYOffset,
+          container: {
+            rect: this.props.target().getBoundingClientRect(),
+            position: getComputedStyle(this.props.target()).position,
+          },
+        });
+        const targetStyle = getComputedStyle(this.props.target());
+        if (
+          autoFlipped &&
+          ((!flipped &&
+            this._menuOutOfBoundAtLeft(
+              targetStyle,
+              floatingPosition,
+              menuSize
+            )) ||
+            (flipped &&
+              this._menuOutOfBoundAtright(targetStyle, floatingPosition)))
+        ) {
+          offset =
+            typeof menuOffset !== 'function'
+              ? menuOffset
+              : menuOffset(menuBody, menuDirection, triggerEl, !flipped);
+          floatingPosition = getFloatingPosition({
             menuSize,
             refPosition,
             direction: menuDirection,
@@ -350,20 +388,64 @@ class FloatingMenu extends React.Component {
               rect: this.props.target().getBoundingClientRect(),
               position: getComputedStyle(this.props.target()).position,
             },
-          }),
+          });
+        }
+        this.setState({
+          floatingPosition,
         });
       }
     }
   };
 
+  /**
+   * Change flip of menu smartly when its at Leftmost side.
+   * @param {object} targetStyle This is computed style of target element.
+   * @param {object} floatingPosition This contains left and top postion of menu.
+   * @param {object} menuSize This contains all info about overFlow menu.
+   * @returns {boolean}
+   */
+  _menuOutOfBoundAtLeft = (targetStyle, floatingPosition, menuSize) => {
+    return (
+      this.props.target().getBoundingClientRect().right -
+        parseInt(targetStyle.paddingRight) -
+        parseInt(targetStyle.marginRight) <
+      floatingPosition.left + menuSize.width
+    );
+  };
+
+  /**
+   * Change flip of menu smartly when its at Rightmost side.
+   * @param {object} targetStyle This is computed style of target element.
+   * @param {object} floatingPosition This contains left and top postion of menu.
+   * @returns {boolean}
+   */
+  _menuOutOfBoundAtright = (targetStyle, floatingPosition) => {
+    return (
+      parseInt(targetStyle.paddingLeft) + parseInt(targetStyle.marginLeft) >
+      floatingPosition.left
+    );
+  };
+
   componentWillUnmount() {
     this.hResize.release();
+    this.props.target().removeEventListener('scroll', () => {
+      this._updateMenuSize();
+    });
   }
 
   componentDidMount() {
     this.hResize = OptimizedResize.add(() => {
       this._updateMenuSize();
     });
+    this.props.target().addEventListener(
+      'scroll',
+      (event) => {
+        if (event.target.scrollLeft) {
+          this._updateMenuSize();
+        }
+      },
+      true
+    );
   }
 
   /**
