@@ -3,6 +3,7 @@ jobs:
   system:
     docker:
       - image: circleci/node:14-browsers
+    resource_class: large
     working_directory: ~/repo
     steps:
       - checkout
