@@ -28,7 +28,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "yarn clean && node scripts/build.js && rollup -c",
+    "build": "yarn clean && node --max-old-space-size=3500 scripts/build.js && rollup -c",
     "build-storybook": "cross-env NODE_ENV=production build-storybook -s ./.storybook/assets",
     "clean": "rimraf es lib umd storybook-static build react-docgen.json",
     "postinstall": "carbon-telemetry collect --install",
