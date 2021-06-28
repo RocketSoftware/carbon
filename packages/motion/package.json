@@ -30,7 +30,7 @@
     "clean": "rimraf es lib umd"
   },
   "devDependencies": {
-    "@carbon/cli": "^10.24.0",
+    "@carbon/cli": "^10.25.0",
     "rimraf": "^3.0.0"
   },
   "eyeglass": {

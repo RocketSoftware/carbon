@@ -36,7 +36,7 @@
     "@rocketsoftware/layout": "^0.9.0"
   },
   "devDependencies": {
-    "@carbon/cli": "^10.24.0",
+    "@carbon/cli": "^10.25.0",
     "rimraf": "^3.0.0"
   },
   "eyeglass": {
